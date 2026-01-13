@@ -12,9 +12,6 @@ const LINKING_ERROR =
   '- You rebuilt the app after installing the package\n' +
   '- You are not using Expo Go\n';
 
-// @ts-ignore - accessing internal React Native property
-const isTurboModuleEnabled = global?.__turboModuleProxy != null;
-
 /**
  * @description Position enum for text watermark and image watermark
  * @enum
@@ -833,18 +830,17 @@ export interface ImageMarkOptions {
   watermarkImages: Array<WatermarkImageOptions>;
 }
 
-const ImageMarker = isTurboModuleEnabled
-  ? TurboModuleRegistry.getEnforcing('ImageMarker')
-  : NativeModules.ImageMarker
-  ? NativeModules.ImageMarker
-  : new Proxy(
-      {},
-      {
-        get() {
-          throw new Error(LINKING_ERROR);
-        },
-      }
-    );
+const ImageMarker =
+  TurboModuleRegistry.get('ImageMarker') ??
+  NativeModules.ImageMarker ??
+  new Proxy(
+    {},
+    {
+      get() {
+        throw new Error(LINKING_ERROR);
+      },
+    }
+  );
 
 class Marker {
   /** @ignore ignore constructors for typedoc only */
