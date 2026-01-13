@@ -127,6 +127,68 @@ eas build
 
 > ***Note: This table is only applicable to major versions of react-native-image-marker. Patch versions should be backwards compatible.***
 
+## New Architecture Support
+
+This library fully supports React Native's New Architecture (TurboModules & Fabric) introduced in React Native 0.68+.
+
+### Benefits of the New Architecture
+
+- **Better Performance**: TurboModules provide faster native module initialization and method calls
+- **Type Safety**: Enhanced type safety between JavaScript and native code
+- **Future Proof**: Aligned with React Native's future direction
+
+### Enabling New Architecture
+
+The library automatically detects and uses the appropriate architecture (old or new) based on your React Native configuration. 
+
+#### For React Native 0.70+
+
+To enable the New Architecture in your app:
+
+**iOS:**
+```bash
+cd ios
+RCT_NEW_ARCH_ENABLED=1 bundle exec pod install
+```
+
+**Android:**
+
+Add to `android/gradle.properties`:
+```properties
+newArchEnabled=true
+```
+
+#### Compatibility
+
+- ✅ Fully compatible with New Architecture (TurboModules)
+- ✅ Backward compatible with the old Bridge architecture
+- ✅ Automatic detection - no code changes needed
+- ✅ Works with both Hermes and JSC engines
+
+The library will automatically use TurboModules when available, falling back to the traditional bridge architecture when running on older React Native versions or when New Architecture is not enabled.
+
+#### Verifying New Architecture
+
+To verify that the New Architecture is working in your app:
+
+**Check Build Logs:**
+- **iOS**: Look for `Building with New Architecture` in Xcode build logs
+- **Android**: Check Gradle logs for `IS_NEW_ARCHITECTURE_ENABLED = true`
+
+**Runtime Verification:**
+```javascript
+// The library automatically uses the best available implementation
+// No code changes needed - it just works!
+import Marker from 'react-native-image-marker';
+
+// Use the library normally - TurboModules will be used if available
+Marker.markText(options).then(result => {
+  console.log('Image marked:', result);
+});
+```
+
+The library seamlessly switches between architectures based on your app's configuration, ensuring optimal performance in all scenarios.
+
 ## Usage
 
 ### Text background fit

@@ -16,4 +16,9 @@ RCT_EXTERN_METHOD(markWithText: (nonnull NSDictionary *) opts
                   resolver:(RCTPromiseResolveBlock)resolve
                   rejecter:(RCTPromiseRejectBlock)reject)
 
++ (BOOL)requiresMainQueueSetup
+{
+    return NO;
+}
+
 @end
