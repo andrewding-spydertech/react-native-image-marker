@@ -1,5 +1,17 @@
 # Changelog
 
+## [Unreleased]
+
+### Features
+
+* **New Architecture Support**: Add full support for React Native's New Architecture (TurboModules & Fabric)
+  - Automatic detection and use of TurboModules when available
+  - Backward compatible with legacy bridge architecture
+  - iOS: Updated native module bridge with `requiresMainQueueSetup`
+  - Android: Migrated to `TurboReactPackage` with module info provider
+  - TypeScript: Added TurboModule spec for Codegen
+  - Documentation: Added comprehensive New Architecture guide with setup instructions
+
 ## [1.2.9](///compare/v1.1.8...v1.2.9) (2025-11-20)
 
 ### Features
