@@ -1,4 +1,4 @@
-import { NativeModules, Platform, Image } from 'react-native';
+import { NativeModules, Platform, Image, TurboModuleRegistry } from 'react-native';
 
 const { resolveAssetSource } = Image;
 const LINKING_ERROR =
@@ -6,6 +6,8 @@ const LINKING_ERROR =
   Platform.select({ ios: "- You have run 'pod install'\n", default: '' }) +
   '- You rebuilt the app after installing the package\n' +
   '- You are not using Expo Go\n';
+
+const isTurboModuleEnabled = global.__turboModuleProxy != null;
 
 /**
  * @description Position enum for text watermark and image watermark
@@ -825,7 +827,9 @@ export interface ImageMarkOptions {
   watermarkImages: Array<WatermarkImageOptions>;
 }
 
-const ImageMarker = NativeModules.ImageMarker
+const ImageMarker = isTurboModuleEnabled
+  ? TurboModuleRegistry.getEnforcing('ImageMarker')
+  : NativeModules.ImageMarker
   ? NativeModules.ImageMarker
   : new Proxy(
       {},
