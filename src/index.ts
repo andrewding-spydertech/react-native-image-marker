@@ -1,4 +1,9 @@
-import { NativeModules, Platform, Image, TurboModuleRegistry } from 'react-native';
+import {
+  NativeModules,
+  Platform,
+  Image,
+  TurboModuleRegistry,
+} from 'react-native';
 
 const { resolveAssetSource } = Image;
 const LINKING_ERROR =
@@ -7,7 +12,8 @@ const LINKING_ERROR =
   '- You rebuilt the app after installing the package\n' +
   '- You are not using Expo Go\n';
 
-const isTurboModuleEnabled = global.__turboModuleProxy != null;
+// @ts-ignore - accessing internal React Native property
+const isTurboModuleEnabled = global?.__turboModuleProxy != null;
 
 /**
  * @description Position enum for text watermark and image watermark
